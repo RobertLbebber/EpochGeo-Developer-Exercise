@@ -243,6 +243,7 @@ pytest -v
 
 ## See also
 
+- Explainer video — [![K-d Trees - Computerphile](https://www.youtube.com/watch?v=BK5x7IUTIyU)](https://www.youtube.com/watch?v=BK5x7IUTIyU)
 - `./diagram.plantuml` — class diagram of the implementation.
 - `../examples/simple_example.py` — minimal usage example.
 - The docstrings in `./nearest_neighbor_index.py` — per-function reference.
