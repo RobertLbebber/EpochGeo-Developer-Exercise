@@ -1,0 +1,14 @@
+$ python -m unittest tests.test_nearest_neighbor_index -v
+test_basic (tests.test_nearest_neighbor_index.NearestNeighborIndexTest.test_basic)
+test_basic tests a handful of nearest neighbor queries to make sure they return the right ... ok
+test_benchmark (tests.test_nearest_neighbor_index.NearestNeighborIndexTest.test_benchmark)
+test_benchmark tests a bunch of values using the slow and fast version of the index ... slow time: 2.21sec
+new time: 0.01sec
+speedup: 305.64x
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.253s
+
+OK
+(.venv)
