@@ -1,0 +1,5 @@
+.eggs
+*.egg-info
+
+pynn/_dist_ver.py
+__pycache__
