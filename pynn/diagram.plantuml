@@ -1,0 +1,63 @@
+@startuml
+title KD-Tree Nearest Neighbor — Process Diagram
+
+start
+:Input: list of 2D points;
+
+partition "BUILD PHASE (once, in __init__)" {
+  :Enumerate points
+  -> indexed_points = [(point, i), ...];
+  :Call _build_kd_tree(indexed_points, depth=0);
+
+  while (indexed_points empty?) is (yes)
+    :return None;
+    detach
+  endwhile (no)
+
+  :axis = depth % 2;
+  :sort indexed_points by point[axis];
+  :mid = len // 2;
+  :node = _KDNode(point[mid], index[mid], axis);
+  :node.left  = _build_kd_tree(left half,  depth+1);
+  :node.right = _build_kd_tree(right half, depth+1);
+  :return node;
+  note right: Recurse until empty.\nTotal cost O(n log n)
+}
+
+partition "QUERY PHASE (per find_nearest call)" {
+  :Input: query_point;
+  :Call _find_nearest(root, query_point);
+
+  repeat
+    if (node == None?) then (yes)
+      :return (best_dist, best_point, best_index);
+      detach
+    endif
+
+    :compute dist = dx^2 + dy^2;
+    if (dist < best_dist) or\n(dist == best_dist and index < best_index)? then (yes)
+      :update best_dist, best_point, best_index;
+    endif
+
+    :diff = query[axis] - point[axis];
+    if (diff < 0?) then (yes)
+      :near = left;  far = right;
+    else (no)
+      :near = right; far = left;
+    endif
+
+    :recurse into NEAR child;
+    if (diff^2 <= best_dist?) then (yes)
+      :recurse into FAR child\n(pruning check passed);
+    else (no)
+      :skip FAR child\n(pruned);
+    endif
+  repeat while (more nodes?) is (yes)
+  ->no;
+
+  :return best_point;
+}
+
+:Output: nearest indexed point\n(or None if index empty);
+stop
+@enduml
